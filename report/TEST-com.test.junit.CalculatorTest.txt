@@ -1,0 +1,21 @@
+Testsuite: com.test.junit.CalculatorTest
+Tests run: 4, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.021 sec
+
+Testcase: divide(com.test.junit.CalculatorTest):	Caused an ERROR
+被除数不能为0
+java.lang.ArithmeticException: 被除数不能为0
+	at com.test.junit.Calculator.divide(Unknown Source)
+	at com.test.junit.CalculatorTest.divide(Unknown Source)
+
+
+Testcase: multiply(com.test.junit.CalculatorTest):	FAILED
+
+Expected: is <5>
+     but: was <6>
+junit.framework.AssertionFailedError: 
+Expected: is <5>
+     but: was <6>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at com.test.junit.CalculatorTest.multiply(Unknown Source)
+
+
