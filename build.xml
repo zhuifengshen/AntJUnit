@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="ant-junit" default="test" basedir=".">
+       <!--属性设置-->
+       <property name="output" value="bin"/>
+       <property name="src" value="src"/>
+       <property name="test" value="test"/>
+       <property name="report" value="report"/>
+       <!--类路径-->
+       <path id="classpath">
+              <!--使用正则匹配-->
+              <fileset dir="lib">
+                     <include name="**/*.jar"/>
+              </fileset>
+              <!--单独指定-->
+              <pathelement path="${output}"/>
+       </path>
+       <!--初始化-->
+       <target name="init">
+              <mkdir dir="${output}"/>
+              <mkdir dir="${report}"/>
+              <echo>init complete!!!</echo>
+       </target>
+       <!--编译-->
+       <target name="compile">
+              <javac srcdir="${src}" destdir="${output}" includeantruntime="true">
+                     <classpath refid="classpath"/>
+              </javac>
+              <echo>compilation complete!!!</echo>
+       </target>
+       <target name="testcompile">
+              <javac srcdir="${test}" destdir="${output}" includeantruntime="true">
+                     <classpath refid="classpath"/>
+              </javac>
+              <echo>test compilation complete!!!</echo>
+       </target>
+       <target name="allcompile" depends="init, compile, testcompile">
+              <echo>all compile complete!!!</echo>
+       </target>
+       <!--JUnit测试-->
+       <target name="test" depends="allcompile">
+              <!--showouput输出测试日志-->
+              <junit printsummary="on" fork="true" showoutput="true">
+                     <classpath refid="classpath"/>
+                     <formatter type="xml"/>
+                     <!--正则匹配所需执行测试的文件-->
+                     <batchtest todir="${report}">
+                            <fileset dir="${output}">
+                                   <include name="**/*Test.*"/>
+                            </fileset>
+                     </batchtest>
+              </junit>
+              <junitreport todir="${report}">
+                     <fileset dir="${report}">
+                            <include name="TEST-*.xml"/>
+                     </fileset>
+                     <report format="frames" todir="${report}"/>
+              </junitreport>
+              <echo>junit test complete!!!</echo>
+       </target>
+</project>
