@@ -23,6 +23,7 @@
        <!--编译-->
        <target name="compile">
               <javac srcdir="${src}" destdir="${output}" includeantruntime="true">
+                     <!--对当前构建文件中某处定义的一个path的引用-->
                      <classpath refid="classpath"/>
               </javac>
               <echo>compilation complete!!!</echo>
@@ -38,10 +39,11 @@
        </target>
        <!--JUnit测试-->
        <target name="test" depends="allcompile">
-              <!--showouput输出测试日志-->
+              <!--showouput输出测试日志、fork表示在一个新的虚拟机中运行该类-->
               <junit printsummary="on" fork="true" showoutput="true">
                      <classpath refid="classpath"/>
-                     <formatter type="xml"/>
+                     <formatter type="brief" usefile="true"/>
+                     <!--<formatter type="xml" usefile="true"/>-->
                      <!--正则匹配所需执行测试的文件-->
                      <batchtest todir="${report}">
                             <fileset dir="${output}">
@@ -51,7 +53,8 @@
               </junit>
               <junitreport todir="${report}">
                      <fileset dir="${report}">
-                            <include name="TEST-*.xml"/>
+                            <include name="TEST-*.txt"/>
+                            <!--<include name="TEST-*.xml"/>-->
                      </fileset>
                      <report format="frames" todir="${report}"/>
               </junitreport>
